@@ -11,7 +11,7 @@ void MouseForce::apply_force(PhysicalObject & entity)
 	sf::Vector2i pos = sf::Mouse::getPosition(window);
 	sf::Vector2f mouse_position(pos);
 
-	sf::Vector2f ball_position = entity.position;
+	sf::Vector2f ball_position = entity.get_center();
 
 	sf::Vector2f difference = mouse_position - ball_position;
 

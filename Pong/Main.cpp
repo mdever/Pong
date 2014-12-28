@@ -13,13 +13,13 @@
 
 int main()
 {
-	std::shared_ptr<ResourceManager> resource_manager = std::shared_ptr<ResourceManager>(ResourceManager::getResourceManager("properties.xml"));
+	std::shared_ptr<ResourceManager> resource_manager(ResourceManager::getResourceManager("properties.xml"));
 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 
-	Ball ball(sf::Vector2f(50, 50));
+	Ball ball(sf::Vector2f(50, 50), 20);
 	ball.register_force(new MouseForce(window, 0.25));
-	ball.register_force(new Gravity(sf::Vector2f(0,0.1)));
+	// ball.register_force(new Gravity(sf::Vector2f(0,0.1)));
 
 	sf::Clock clock;
 	bool clock_started = false;

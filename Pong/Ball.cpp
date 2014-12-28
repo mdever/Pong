@@ -1,7 +1,7 @@
 #include "Ball.h"
 #include <iostream>
 
-Ball::Ball(sf::Vector2f pos) : shape(sf::CircleShape(20))
+Ball::Ball(sf::Vector2f pos, float radius) : shape(sf::CircleShape(20))
 {
 	this->position = pos;
 	this->velocity.x = 0;
@@ -13,6 +13,7 @@ Ball::Ball(sf::Vector2f pos) : shape(sf::CircleShape(20))
 	this->resistance = 0.9;
 	this->speed_factor = 1.5;
 	this->shape.setPosition(50, 50);
+	this->shape.setRadius(radius);
 	this->bounce_dampener = 0.9;
 }
 
@@ -89,4 +90,10 @@ Ball::~Ball()
 void Ball::register_force(Force * frce)
 {
 	this->forces.push_back(frce);
+}
+
+sf::Vector2f Ball::get_center() const
+{
+	float rad = this->shape.getRadius();
+	return sf::Vector2f(position.x + rad, position.y + rad);
 }
