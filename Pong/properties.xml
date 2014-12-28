@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<properties>
+
+  <ball>
+    <position>
+      <x>50</x>
+      <y>50</y>
+    </position>
+  </ball>
+  <gravity>
+    <acceleration>
+      <x>0</x>
+      <y>0.001</y>
+    </acceleration>
+  </gravity>
+  
+</properties>
