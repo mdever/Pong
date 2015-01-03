@@ -97,3 +97,25 @@ sf::Vector2f Ball::get_center() const
 	float rad = this->shape.getRadius();
 	return sf::Vector2f(position.x + rad, position.y + rad);
 }
+
+void Ball::handle_input(const sf::Event& event)
+{
+	switch (event.key.code) {
+	case sf::Keyboard::Down:
+		impulse(Ball::DOWN);
+		std::cout << "Down" << std::endl;
+		break;
+	case sf::Keyboard::Up:
+		impulse(Ball::UP);
+		std::cout << "Up" << std::endl;
+		break;
+	case sf::Keyboard::Right:
+		impulse(Ball::RIGHT);
+		std::cout << "Right" << std::endl;
+		break;
+	case sf::Keyboard::Left:
+		impulse(Ball::LEFT);
+		std::cout << "Left" << std::endl;
+		break;
+	}
+}

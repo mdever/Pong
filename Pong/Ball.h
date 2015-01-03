@@ -13,7 +13,7 @@ class Ball : PhysicalObject, Drawable {
 
 public:
 	virtual void doUpdate(sf::Time dt);
-	virtual void doDraw(sf::RenderTarget & window, sf::RenderStates states);
+	virtual void doDraw(sf::RenderTarget & window, sf::RenderStates states = sf::Transform::Identity);
 
 
 	sf::CircleShape shape;
@@ -33,6 +33,7 @@ public:
 	// Todo - Refactor this in to the PhysicalObject baseclass. No reason this is unique to the Ball.
 	void register_force(Force * frce);
 	virtual sf::Vector2f get_center() const;
+	virtual void handle_input(const sf::Event& event);
 protected:
 	virtual void integrate(sf::Time dt);
 	float speed_factor;

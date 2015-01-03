@@ -6,7 +6,7 @@
 class Drawable {
 
 public:
-	virtual void doDraw(sf::RenderTarget & window, sf::RenderStates states) = 0;
+	virtual void doDraw(sf::RenderTarget & window, sf::RenderStates states = sf::Transform::Identity) = 0;
 };
 
 #endif

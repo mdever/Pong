@@ -10,16 +10,28 @@
 #include "Gravity.h"
 #include "ResourceManager.h"
 #include "MouseForce.h"
+#include "Entity.h"
 
 int main()
 {
 	std::shared_ptr<ResourceManager> resource_manager(ResourceManager::getResourceManager("properties.xml"));
 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
+	std::vector<Entity *> entities;
+	std::vector<Drawable *> drawables;
 
 	Ball ball(sf::Vector2f(50, 50), 20);
 	ball.register_force(new MouseForce(window, 0.25));
-	// ball.register_force(new Gravity(sf::Vector2f(0,0.1)));
+	
+	Ball gravity_ball(sf::Vector2f(100, 100), 20);
+	gravity_ball.register_force(new Gravity(sf::Vector2f(0, 0.05)));
+	ball.register_force(new Gravity(sf::Vector2f(0,0.1)));
+
+	entities.push_back((Entity*) &ball);
+	drawables.push_back((Drawable*) &ball);
+
+	entities.push_back((Entity*) &gravity_ball);
+	drawables.push_back((Drawable *) &gravity_ball);
 
 	sf::Clock clock;
 	bool clock_started = false;
@@ -42,34 +54,25 @@ int main()
 			case sf::Event::Closed:
 				window.close();
 			case sf::Event::KeyPressed:
-				switch (event.key.code) {
-				case sf::Keyboard::Down:
-					ball.impulse(Ball::DOWN);
-					std::cout << "Down" << std::endl;
-					break;
-				case sf::Keyboard::Up:
-					ball.impulse(Ball::UP);
-					std::cout << "Up" << std::endl;
-					break;
-				case sf::Keyboard::Right:
-					ball.impulse(Ball::RIGHT);
-					std::cout << "Right" << std::endl;
-					break;
-				case sf::Keyboard::Left:
-					ball.impulse(Ball::LEFT);
-					std::cout << "Left" << std::endl;
-					break;
+				for (Entity *entity : entities) {
+					entity->handle_input(event);
 				}
-
 			}
 		}
 
 		if (clock.getElapsedTime().asMilliseconds() > 30) {
 			sf::Time dt = clock.restart();
 			std::cout << "Executed " << num_loops++ << " loops. Elapsed time: " << dt.asMilliseconds() << " milliseconds" << std::endl;
-			ball.doUpdate(dt);
+			for (Entity *entity : entities) {
+				entity->doUpdate(dt);
+			}
+			
 			window.clear(sf::Color::Black);
-			window.draw(ball.shape);
+			
+			for (Drawable *drawable : drawables) {
+				drawable->doDraw(window);
+			}
+
 			window.display();
 		}
 	}
